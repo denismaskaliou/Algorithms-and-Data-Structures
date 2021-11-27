@@ -1,3 +1,4 @@
+using Algorithms.Search;
 using Xunit;
 
 namespace Tests.Algorithms
@@ -31,6 +32,19 @@ namespace Tests.Algorithms
 
             // Assert
             Assert.Equal(9, beginIndex);
+        }
+
+        [Fact]
+        public void BinarySearch()
+        {
+            // Arrange
+            var array = new int[] { 1, 2, 3, 3, 4, 5, 5, 5, 6, 7, 8, 9, 10 };
+
+            // Act
+            var index = array.BinarySearch(5);
+
+            // Assert
+            Assert.Equal((5, 7), index);
         }
     }
 }

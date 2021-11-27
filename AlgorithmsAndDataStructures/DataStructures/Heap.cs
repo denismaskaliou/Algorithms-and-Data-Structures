@@ -15,6 +15,15 @@ namespace DataStructures
             _currentIndex = 0;
         }
 
+        public Heap(T[] items)
+        {
+            _currentIndex = items.Length;
+            _array = items;
+
+            for (var i = _array.Length / 2 - 1; i >= 0; i--)
+                SiftDown(i, _array.Length);
+        }
+
         public int Count => _currentIndex;
 
         public void Insert(T item)
@@ -29,14 +38,16 @@ namespace DataStructures
             _currentIndex++;
         }
 
-        public void Remove(T item)
+        public T GetMin()
         {
-            var indexToRemove = 0;
+            var min = _array[0];
 
-            Swap(indexToRemove, _currentIndex - 1);
+            Swap(0, _currentIndex - 1);
             _currentIndex--;
 
-            SiftDown(indexToRemove);
+            SiftDown(0);
+
+            return min;
         }
 
         #region Internal implementation
@@ -71,7 +82,7 @@ namespace DataStructures
             var (leftIndex, rightIndex) = GetChildrenIndexes(parentIndex);
             var minIndex = parentIndex;
 
-            foreach (var currentIndex in new[] {leftIndex, rightIndex})
+            foreach (var currentIndex in new[] { leftIndex, rightIndex })
             {
                 if (currentIndex < _currentIndex && _array[minIndex].CompareTo(_array[currentIndex]) == 1)
                 {
@@ -84,6 +95,26 @@ namespace DataStructures
 
             Swap(parentIndex, minIndex);
             SiftDown(minIndex);
+        }
+
+        private void SiftDown(int parentIndex, int lastIndex)
+        {
+            var minIndex = parentIndex;
+
+            foreach (var childIndex in new[] { parentIndex * 2 + 1, parentIndex * 2 + 2 })
+            {
+                if (childIndex < lastIndex &&
+                    _array[minIndex].CompareTo(_array[childIndex]) == 1)
+                {
+                    minIndex = childIndex;
+                }
+            }
+
+            if (minIndex == parentIndex)
+                return;
+
+            Swap(parentIndex, minIndex);
+            SiftDown(minIndex, lastIndex);
         }
 
         private void Swap(int leftIndex, int rightIndex)

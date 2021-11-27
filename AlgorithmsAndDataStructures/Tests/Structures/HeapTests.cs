@@ -30,7 +30,7 @@ namespace Tests.Structures
             _heap.Insert(1);
 
             // Assert
-            Assert.Equal(new[] {0, 1, 4, 2, 3, 8, 6, 5}, _heap);
+            Assert.Equal(new[] { 0, 1, 4, 2, 3, 8, 6, 5 }, _heap);
             PrintTree();
         }
 
@@ -49,10 +49,11 @@ namespace Tests.Structures
             PrintTree("Before:");
 
             // Act
-            _heap.Remove(0);
+            var min = _heap.GetMin();
 
             // Assert
-            Assert.Equal(new[] {1, 2, 4, 5, 3, 8, 6}, _heap);
+            Assert.Equal(0, min);
+            Assert.Equal(new[] { 1, 2, 4, 5, 3, 8, 6 }, _heap);
             PrintTree("After:");
         }
 
